@@ -16,15 +16,13 @@ android {
     defaultConfig {
         applicationId "com.garage.app"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion flutter.targetSdkVersion
         versionCode 2
         versionName "1.0.1"
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a"
         }
     }
-
-
 
     buildTypes {
         release {

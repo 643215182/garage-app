@@ -5,8 +5,7 @@ plugins {
 
 android {
     namespace "com.garage.app"
-    compileSdk flutter.compileSdkVersion
-    ndkVersion "27.0.12077973"
+    compileSdk 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -16,12 +15,9 @@ android {
     defaultConfig {
         applicationId "com.garage.app"
         minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
-        ndk {
-            abiFilters "armeabi-v7a", "arm64-v8a"
-        }
+        targetSdkVersion 35
+        versionCode 3
+        versionName "1.0.2"
     }
 
     buildTypes {

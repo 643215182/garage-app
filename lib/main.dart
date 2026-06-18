@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/login/login_page.dart';
-import 'pages/dashboard/dashboard_page.dart';
+import 'pages/main_page.dart';
+import 'services/api_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,12 +25,11 @@ class GarageApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        fontFamily: 'PingFang SC',
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           elevation: 0,
         ),
-        cardTheme: CardThemeData(
+        cardTheme: CardTheme(
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -56,16 +56,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _initApp() async {
-    // 初始化 API 服务（恢复 Session）
     await ApiService.init();
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('session_id');
+    final loggedIn = prefs.getBool('logged_in') ?? false;
     await Future.delayed(const Duration(milliseconds: 800));
     if (mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => token != null
+          builder: (_) => loggedIn
               ? const MainPage()
               : const LoginPage(),
         ),

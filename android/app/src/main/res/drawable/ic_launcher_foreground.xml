@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Wrench icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,38 C58,38 62,40 64,44 L70,38 C72,36 75,36 77,38 L79,40 C81,42 81,45 79,47 L73,53 C77,55 78,60 76,64 C73,69 67,70 62,67 L44,85 C41,88 36,88 33,85 L31,83 C28,80 28,75 31,72 L48,55 C47,52 47,48 50,45 C52,42 54,40 54,38Z"/>
+</vector>

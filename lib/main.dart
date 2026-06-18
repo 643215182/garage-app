@@ -1,12 +1,20 @@
 // 汽修管理助手 - App 入口
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
 import 'pages/login/login_page.dart';
 import 'pages/main_page.dart';
 import 'services/api_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    debugPrint('FATAL: $error\n$stack');
+    return true;
+  };
   runApp(const GarageApp());
 }
 

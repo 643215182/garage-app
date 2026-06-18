@@ -178,13 +178,15 @@ class ApiService {
     return await _post(ApiConfig.appApi, {'action': 'app_member_delete', 'id': id.toString()});
   }
 
-  static Future<Map> rechargeMember(int id, double amount, String note) async {
-    return await _post(ApiConfig.appApi, {'action': 'app_member_recharge', 'id': id.toString(), 'amount': amount.toString(), 'note': note});
+  static Future<Map> rechargeMember(String id, String amount) async {
+    return await _post(ApiConfig.appApi, {'action': 'app_member_recharge', 'id': id, 'amount': amount, 'note': 'App充值'});
   }
 
-  static Future<Map> deductMember(int id, double amount, String note) async {
-    return await _post(ApiConfig.appApi, {'action': 'app_member_deduct', 'id': id.toString(), 'amount': amount.toString(), 'note': note});
+  static Future<Map> deductMember(String id, String amount) async {
+    return await _post(ApiConfig.appApi, {'action': 'app_member_deduct', 'id': id, 'amount': amount, 'note': 'App扣款'});
   }
+
+
 
   static Future<Map> getMemberRecords(int id) async {
     return await _post(ApiConfig.appApi, {'action': 'app_member_records', 'id': id.toString()});
@@ -194,6 +196,25 @@ class ApiService {
   static Future<Map> getInventory({String? keyword, int page = 1}) async {
     final params = <String, String>{'action': 'app_inventory', 'page': page.toString()};
     if (keyword != null) params['keyword'] = keyword;
+    return await _post(ApiConfig.appApi, params);
+  }
+
+  // ========== 洗车模块 ==========
+  static Future<Map> getWashMeals() async {
+    return await _post(ApiConfig.washApi, {'action': 'get_meals'});
+  }
+
+  static Future<Map> wash(String memberId, int mealId) async {
+    return await _post(ApiConfig.washApi, {'action': 'use_meal', 'member_id': memberId, 'meal_id': mealId.toString()});
+  }
+
+  static Future<Map> searchMember(String keyword) async {
+    return await _post(ApiConfig.appApi, {'action': 'app_members', 'keyword': keyword, 'page': '1'});
+  }
+
+  static Future<Map> saveMember(Map<String, dynamic> data) async {
+    final params = <String, String>{'action': 'app_member_edit'};
+    data.forEach((k, v) { params[k] = v.toString(); });
     return await _post(ApiConfig.appApi, params);
   }
 

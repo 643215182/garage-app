@@ -182,7 +182,7 @@ class _WorkOrdersPageState extends State<WorkOrdersPage> {
   }
 
   Future<void> _updateStatus(String id, String status) async {
-    final res = await ApiService.updateOrder(id, status);
+    final res = await ApiService.updateOrder(int.parse(id), <String, String>{"status": status});
     if (!mounted) return;
     if (res['success'] == true) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('操作成功')));

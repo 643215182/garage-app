@@ -1,0 +1,99 @@
+// 汽修管理助手 - App 入口
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'pages/login/login_page.dart';
+import 'pages/dashboard/dashboard_page.dart';
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const GarageApp());
+}
+
+class GarageApp extends StatelessWidget {
+  const GarageApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '汽修管理助手',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1a73e8),
+          brightness: Brightness.light,
+        ),
+        useMaterial3: true,
+        fontFamily: 'PingFang SC',
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          elevation: 0,
+        ),
+        cardTheme: CardThemeData(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _initApp();
+  }
+
+  Future<void> _initApp() async {
+    // 初始化 API 服务（恢复 Session）
+    await ApiService.init();
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('session_id');
+    await Future.delayed(const Duration(milliseconds: 800));
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => token != null
+              ? const MainPage()
+              : const LoginPage(),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.car_repair, size: 80, color: Color(0xFF1a73e8)),
+            const SizedBox(height: 24),
+            Text(
+              '汽修管理助手',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF1a73e8),
+                  ),
+            ),
+            const SizedBox(height: 32),
+            const CircularProgressIndicator(),
+          ],
+        ),
+      ),
+    );
+  }
+}

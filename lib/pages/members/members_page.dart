@@ -140,7 +140,7 @@ class _MemberDetailSheetState extends State<_MemberDetailSheet> {
   Future<void> _recharge() async {
     final amount = _amountCtrl.text;
     if (amount.isEmpty) return;
-    final res = await ApiService.memberRecharge(widget.member['id'].toString(), amount);
+    final res = await ApiService.rechargeMember(widget.member['id'].toString(), amount);
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res['message'] ?? '充值成功')));
       _amountCtrl.clear();
